@@ -1,5 +1,7 @@
-const asyncHandler = (requestHandler) => (req,res,next) => {  // function of function i.e ()=>{()=>{}} === ()=>()=>{}
-    Promise.resolve(requestHandler(req,res,next)).catch((err)=>next(err)) // This is promise syntax
+const asyncHandler = (requestHandler) =>{
+    return (req,res,next) => {  // function of function i.e ()=>{()=>{}} === ()=>()=>{}
+        Promise.resolve(requestHandler(req,res,next)).catch((err)=>next(err)) // This is promise syntax
+    }
 }
 
 export { asyncHandler }
