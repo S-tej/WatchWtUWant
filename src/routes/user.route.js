@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { registerUser } from "../controllers/user.controller.js";
+import { registerUser, loginUser, logoutUser } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router()
 
@@ -15,8 +16,12 @@ router.route("/register").post(
             maxCount : 1
         }
     ]),
-    registerUser  // before executing the controller we have write  middleware where in this case, file
+    registerUser  // before executing the controller we have written middleware where in this case, files and data will be posted together using the multer middleware
 )
 
+router.route("/login").post(loginUser)
+
+// secured routes
+router.route("/logout").post(verifyJWT,logoutUser)
 
 export default router
